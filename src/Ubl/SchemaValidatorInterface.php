@@ -8,8 +8,22 @@
 
 namespace Greenter\Ubl;
 
-
-class SchemaValidatorInterface
+/**
+ * Interface SchemaValidatorInterface
+ */
+interface SchemaValidatorInterface
 {
+    /**
+     * Get last message error or warning.
+     *
+     * @return string
+     */
+    public function getMessage();
 
+    /**
+     * @param \DOMDocument|string $value Xml content or DomDocument
+     *
+     * @return bool
+     */
+    public function validate($value);
 }

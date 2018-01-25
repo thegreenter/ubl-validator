@@ -6,14 +6,12 @@
  * Time: 05:26 PM.
  */
 
-namespace Greenter\Ubl\v1;
-
-use Greenter\Ubl\SchemaValidatorInterface;
+namespace Greenter\Ubl;
 
 /**
- * Class Validator.
+ * Class SchemaValidator.
  */
-class Validator implements SchemaValidatorInterface
+class SchemaValidator implements SchemaValidatorInterface
 {
     /**
      * @var string
@@ -72,7 +70,8 @@ class Validator implements SchemaValidatorInterface
         return $result;
     }
 
-    private function getErrors() {
+    private function getErrors()
+    {
         $message = '';
         $errors = libxml_get_errors();
         foreach ($errors as $error) {
@@ -84,9 +83,9 @@ class Validator implements SchemaValidatorInterface
         return $message;
     }
 
-    function getError($error)
+    public function getError($error)
     {
-        $msg = "<br/>\n";
+        $msg = '';
         switch ($error->level) {
             case LIBXML_ERR_WARNING:
                 $msg .= 'Alerta';
@@ -98,12 +97,7 @@ class Validator implements SchemaValidatorInterface
                 $msg .= 'Error Fatal';
                 break;
         }
-        $msg .= $error->code.': '.trim($error->message);
-
-        if ($error->file) {
-            $msg .= 'in '.$error->file;
-        }
-        $msg .= 'en la linea '.$error->line;
+        $msg .= ' '.$error->code.': '.trim($error->message).' en la linea '.$error->line;
 
         return $msg;
     }
@@ -116,7 +110,7 @@ class Validator implements SchemaValidatorInterface
             $name = 'UBL-'.$rootName.'-2.1';
         }
 
-        $path = __DIR__.'/../../xsd/'.$this->version.'/'.$name.'.xsd';
+        $path = __DIR__.'/../xsd/'.$this->version.'/maindoc/'.$name.'.xsd';
 
         return $path;
     }
