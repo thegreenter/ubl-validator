@@ -22,8 +22,8 @@
     <cbc:ID>FC01-211</cbc:ID>
     <cbc:IssueDate>2017-12-25</cbc:IssueDate>
     <cbc:IssueTime>20:25:41</cbc:IssueTime>
+    <cbc:Note languageLocaleID="3000">0501002017062500125</cbc:Note>
     <cbc:DocumentCurrencyCode>PEN</cbc:DocumentCurrencyCode>
-    <!--<cbc:Note languageLocaleID="3000">0501002017062500125</cbc:Note>-->
     <cac:DiscrepancyResponse>
         <cbc:ReferenceID>FC01-4355</cbc:ReferenceID>
         <cbc:ResponseCode>07</cbc:ResponseCode>

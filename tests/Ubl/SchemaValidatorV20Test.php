@@ -40,11 +40,31 @@ class SchemaValidatorV20Test extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    public function testNotFoundSchema()
+    {
+        $result = $this->validator->validate('<root></root>');
+
+        $this->assertFalse($result);
+        $this->assertNotEmpty($this->validator->getMessage());
+        echo $this->validator->getMessage();
+    }
+
+    public function testInvalidSchema()
+    {
+        $content = file_get_contents(__DIR__.'/../Resources/error.xml');
+        $result = $this->validator->validate($content);
+
+        $this->assertFalse($result);
+        $this->assertNotEmpty($this->validator->getMessage());
+        echo $this->validator->getMessage();
+    }
+
     public function providerDocs()
     {
-        return [
-          [__DIR__ . '/../Resources/2.0/20000000001-01-F001-00000003.xml'],
-          [__DIR__ . '/../Resources/2.0/20600995805-RA-20170719-01.xml'],
-        ];
+        $files = glob(__DIR__.'/../Resources/2.0/*.xml');
+
+        return array_map(function ($item) {
+            return [$item];
+        }, $files);
     }
 }

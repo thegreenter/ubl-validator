@@ -42,11 +42,10 @@ class SchemaValidatorV21Test extends \PHPUnit_Framework_TestCase
 
     public function providerDocs()
     {
-        return [
-            [__DIR__ . '/../Resources/2.1/20100454523-07-FC01-211.xml'],
-            [__DIR__ . '/../Resources/2.1/20100454523-08-FD01-211.xml'],
-            [__DIR__ . '/../Resources/2.1/20200464529-01-F001-697.xml'],
-            [__DIR__ . '/../Resources/2.1/20000000001-09-T001-123.xml'],
-        ];
+        $files = glob(__DIR__.'/../Resources/2.1/*.xml');
+
+        return array_map(function ($item) {
+            return [$item];
+        }, $files);
     }
 }
