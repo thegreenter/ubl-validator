@@ -6,6 +6,7 @@
 OASIS Universal Business Language Schema Validator - SUNAT.
 
 # Install
+Via Composer from [packagist.org](https://packagist.org/packages/greenter/ubl-validator).
 ```bash
 composer require greenter/ubl-validator
 ```
