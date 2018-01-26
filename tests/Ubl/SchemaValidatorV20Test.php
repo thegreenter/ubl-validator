@@ -51,8 +51,9 @@ class SchemaValidatorV20Test extends \PHPUnit_Framework_TestCase
 
     public function testInvalidSchema()
     {
-        $content = file_get_contents(__DIR__.'/../Resources/error.xml');
-        $result = $this->validator->validate($content);
+        $doc = new \DOMDocument();
+        $doc->load(__DIR__.'/../Resources/error.xml');
+        $result = $this->validator->validate($doc);
 
         $this->assertFalse($result);
         $this->assertNotEmpty($this->validator->getMessage());

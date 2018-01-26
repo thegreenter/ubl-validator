@@ -85,33 +85,30 @@ class SchemaValidator implements SchemaValidatorInterface
 
     public function getError($error)
     {
-        $msg = '';
-        switch ($error->level) {
-            case LIBXML_ERR_WARNING:
-                $msg .= 'Alerta';
-                break;
-            case LIBXML_ERR_ERROR:
-                $msg .= 'Error';
-                break;
-            case LIBXML_ERR_FATAL:
-                $msg .= 'Error Fatal';
-                break;
-        }
-        $msg .= ' '.$error->code.': '.trim($error->message).' en la linea '.$error->line;
+        $msg = $error->code.': '.trim($error->message).' en la linea '.$error->line;
 
         return $msg;
     }
 
     private function getFilename($rootName)
     {
-        if ($this->version == '2.0') {
-            $name = $rootName == 'DespatchAdvice' ? 'UBL-DespatchAdvice-2.0' : 'UBLPE-'.$rootName.'-1.0';
-        } else {
-            $name = 'UBL-'.$rootName.'-2.1';
-        }
+        $name = $this->getName($rootName);
 
         $path = __DIR__.'/../xsd/'.$this->version.'/maindoc/'.$name.'.xsd';
 
         return $path;
+    }
+
+    /**
+     * @param $rootName
+     * @return string
+     */
+    private function getName($rootName)
+    {
+        if ($this->version == '2.0') {
+            return $rootName == 'DespatchAdvice' ? 'UBL-DespatchAdvice-2.0' : 'UBLPE-' . $rootName . '-1.0';
+        }
+
+        return 'UBL-' . $rootName . '-2.1';
     }
 }
