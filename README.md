@@ -18,7 +18,7 @@ use Greenter\Ubl\SchemaValidator;
 $validator = new SchemaValidator();
 $validator->setVersion('2.0');
 
-$xml = file_get_contents('20000000001-01-F001-1');
+$xml = file_get_contents('20000000001-01-F001-1.xml');
 $result = $validator->validate($xml);
 
 if ($result) {
