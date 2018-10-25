@@ -22,37 +22,22 @@ class UblVersionResolver implements VersionResolverInterface
     private $rootNs;
 
     /**
-     * @param string|\DOMDocument $value
+     * UBL Version resolver.
+     *
+     * @param \DOMDocument $document
      * @return string
      */
-    public function getVersion($value)
+    public function getVersion(\DOMDocument $document)
     {
-        $doc = $this->getDocument($value);
-        if (!isset($doc)) {
+        if (empty($document->documentElement)) {
             return '';
         }
 
-        $xpath = $this->getXpath($doc);
-        $this->setNs($doc);
+        $xpath = $this->getXpath($document);
+        $this->setNs($document);
         $xpath->registerNamespace('cbc', self::CBC_NS);
 
         return $this->getSingleValue($xpath, 'cbc:UBLVersionID');
-    }
-
-    private function getDocument($value)
-    {
-        if ($value instanceof \DOMDocument) {
-            $doc = $value;
-        } else {
-            $doc = new \DOMDocument();
-            @$doc->loadXML($value);
-        }
-
-        if (empty($doc->documentElement)) {
-            return null;
-        }
-
-        return $doc;
     }
 
     private function setNs(\DOMDocument $doc)
