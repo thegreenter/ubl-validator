@@ -61,7 +61,7 @@ class UblValidator implements UblValidatorInterface
 
         $valid = $this->schemaValidator->validate($doc, $path);
         if (!$valid) {
-            $this->error = $this->schemaValidator->getMessage();
+            $this->error = $this->getErrorMessage($this->schemaValidator->getErrors());
         }
 
         return $valid;
@@ -77,6 +77,20 @@ class UblValidator implements UblValidatorInterface
         }
 
         return $doc;
+    }
+
+    /**
+     * @param XmlError[] $errors
+     * @return string
+     */
+    private function getErrorMessage($errors)
+    {
+        $lines = [];
+        foreach ($errors as $error) {
+            $lines[] = (string) $error;
+        }
+
+        return join(PHP_EOL, $lines);
     }
 
     private function checkDependencies()
