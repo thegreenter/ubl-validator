@@ -14,16 +14,17 @@ namespace Greenter\Ubl;
 interface SchemaValidatorInterface
 {
     /**
-     * Get last message error or warning.
+     * Get errors list.
      *
-     * @return string
+     * @return XmlError[]
      */
-    public function getMessage();
+    public function getErrors();
 
     /**
-     * @param \DOMDocument|string $value Xml content or DomDocument
+     * @param \DOMDocument $document
+     * @param string $xsdPath XSD full path
      *
      * @return bool
      */
-    public function validate($value);
+    public function validate(\DOMDocument $document, $xsdPath);
 }

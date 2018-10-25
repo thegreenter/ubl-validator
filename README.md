@@ -13,22 +13,19 @@ composer require greenter/ubl-validator
 
 ## Example
 ```php
-use Greenter\Ubl\Resolver\UblVersionResolver;
-use Greenter\Ubl\SchemaValidator;
+use Greenter\Ubl\UblValidator;
 
 $xmlPath = '20000000001-01-F001-1.xml';
 $xml = file_get_contents($xmlPath);
 
-$validator = new SchemaValidator();
-$resolver = new UblVersionResolver()
-$validator->setVersion($resolver->getVersion($xml));
+$validator = new UblValidator();
 
-$result = $validator->validate($xml);
+$result = $validator->isValid($xml);
 
 if ($result) {
-  echo 'Validación exitosa';
+  echo 'Success!!!';
 } else {
-  echo $validator->getMessage();
+  echo $validator->getError();
 }
 
 

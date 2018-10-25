@@ -14,101 +14,57 @@ namespace Greenter\Ubl;
 class SchemaValidator implements SchemaValidatorInterface
 {
     /**
-     * @var string
+     * @var XmlError[]
      */
-    private $error;
+    private $errors;
 
     /**
-     * @var string
-     */
-    private $version = '2.0';
-
-    /**
-     * @param string $version UBL Version '2.0' or '2.1'
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
-     * Get last message error or warning.
+     * Get errors list.
      *
-     * @return string
+     * @return XmlError[]
      */
-    public function getMessage()
+    public function getErrors()
     {
-        return $this->error;
+        return $this->errors;
     }
 
     /**
-     * @param \DOMDocument|string $value Xml content or DomDocument
+     * @param \DOMDocument $document
+     * @param string $xsdPath XSD full path
      *
      * @return bool
      */
-    public function validate($value)
+    public function validate(\DOMDocument $document, $xsdPath)
     {
-        if ($value instanceof \DOMDocument) {
-            $doc = $value;
-        } else {
-            $doc = new \DOMDocument();
-            @$doc->loadXML($value);
-        }
-
-        $filename = $this->getFilename($doc->documentElement->nodeName);
-        if (!file_exists($filename)) {
-            $this->error = 'Schema file not found';
-
-            return false;
-        }
-
         $state = libxml_use_internal_errors(true);
-        $result = $doc->schemaValidate($filename);
-        $this->error = $this->getErrors();
+        $result = $document->schemaValidate($xsdPath);
+        $this->errors = $this->extractErrors();
         libxml_use_internal_errors($state);
 
         return $result;
     }
 
-    private function getErrors()
+    /**
+     * Get errors list.
+     *
+     * @return XmlError[]
+     */
+    public function extractErrors()
     {
-        $message = '';
         $errors = libxml_get_errors();
+        $list = [];
         foreach ($errors as $error) {
-            $message .= $this->getError($error).PHP_EOL;
+            $item = new XmlError();
+            $item->level = $error->level;
+            $item->code = $error->code;
+            $item->column = $error->column;
+            $item->message = $error->message;
+            $item->line = $error->line;
+            $list[] = $item;
         }
 
         libxml_clear_errors();
 
-        return $message;
-    }
-
-    public function getError($error)
-    {
-        $msg = $error->code.': '.trim($error->message).' en la linea '.$error->line;
-
-        return $msg;
-    }
-
-    private function getFilename($rootName)
-    {
-        $name = $this->getName($rootName);
-
-        $path = __DIR__.'/../xsd/'.$this->version.'/maindoc/'.$name.'.xsd';
-
-        return $path;
-    }
-
-    /**
-     * @param $rootName
-     * @return string
-     */
-    private function getName($rootName)
-    {
-        if ($this->version == '2.0') {
-            return $rootName == 'DespatchAdvice' ? 'UBL-DespatchAdvice-2.0' : 'UBLPE-' . $rootName . '-1.0';
-        }
-
-        return 'UBL-' . $rootName . '-2.1';
+        return $list;
     }
 }

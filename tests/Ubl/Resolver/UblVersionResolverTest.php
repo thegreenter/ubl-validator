@@ -26,9 +26,10 @@ class UblVersionResolverTest extends \PHPUnit_Framework_TestCase
     public function testSuccessValidate()
     {
         $path = __DIR__.'/../../Resources/2.1/20100454523-07-FC01-211.xml';
-        $xml = file_get_contents($path);
+        $doc = new \DOMDocument();
+        $doc->load($path);
 
-        $version = $this->resolver->getVersion($xml);
+        $version = $this->resolver->getVersion($doc);
 
         $this->assertEquals('2.1', $version);
     }
@@ -52,7 +53,7 @@ class UblVersionResolverTest extends \PHPUnit_Framework_TestCase
     <text>-</text>
 </root>
 XML;
-        $version = $this->resolver->getVersion($xml);
+        $version = $this->resolver->getVersion($this->getDocFromXml($xml));
 
         $this->assertEmpty($version);
     }
@@ -60,8 +61,16 @@ XML;
     public function testEmptyXML()
     {
         $xml = '';
-        $version = $this->resolver->getVersion($xml);
+        $version = $this->resolver->getVersion($this->getDocFromXml($xml));
 
         $this->assertEmpty($version);
+    }
+
+    private function getDocFromXml($xml)
+    {
+        $doc = new \DOMDocument();
+        @$doc->loadXML($xml);
+
+        return $doc;
     }
 }
