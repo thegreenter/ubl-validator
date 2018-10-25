@@ -38,15 +38,8 @@ class UblPathResolver implements PathResolverInterface
      */
     function getPath(\DOMDocument $document)
     {
-        if (empty($document->documentElement)) {
-            return null;
-        }
         $name = $document->documentElement->localName;
         $path = $this->getFullPath($name);
-
-        if (!file_exists($path)) {
-            return null;
-        }
 
         return $path;
     }
