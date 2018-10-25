@@ -55,7 +55,7 @@ class UblValidator implements UblValidatorInterface
 
         $path = $this->pathResolver->getPath($doc);
         if (empty($path) || !file_exists($path)) {
-            $this->error = 'XSD Path not found';
+            $this->error = "XSD Path: :'$path' not found";
             return false;
         }
 
@@ -81,7 +81,10 @@ class UblValidator implements UblValidatorInterface
 
     private function checkDependencies()
     {
-        if (!$this->pathResolver) $this->pathResolver = new UblPathResolver();
+        if (!$this->pathResolver) {
+            $this->pathResolver = new UblPathResolver();
+            $this->pathResolver->baseDirectory = __DIR__.'/../xsd';
+        }
         if (!$this->schemaValidator) $this->schemaValidator = new SchemaValidator();
     }
 }
