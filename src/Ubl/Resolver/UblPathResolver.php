@@ -24,6 +24,11 @@ class UblPathResolver implements PathResolverInterface
     public $version;
 
     /**
+     * @var VersionResolverInterface
+     */
+    public $versionResolver;
+
+    /**
      * Base XSD Directory
      *
      * @var string
@@ -39,6 +44,9 @@ class UblPathResolver implements PathResolverInterface
     function getPath(\DOMDocument $document)
     {
         $name = $document->documentElement->localName;
+        if (empty($this->version)) {
+            $this->loadVersion($document);
+        }
         $path = $this->getFullPath($name);
 
         return $path;
@@ -50,5 +58,14 @@ class UblPathResolver implements PathResolverInterface
         $path = $this->baseDirectory.DIRECTORY_SEPARATOR.'maindoc'.DIRECTORY_SEPARATOR.$filename;
 
         return $path;
+    }
+
+    private function loadVersion(\DOMDocument $document)
+    {
+        if (!$this->versionResolver) {
+            $this->versionResolver = new UblVersionResolver();
+        }
+
+        $this->version = $this->versionResolver->getVersion($document);
     }
 }
