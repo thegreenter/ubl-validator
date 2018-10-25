@@ -23,7 +23,7 @@ $validator = new UblValidator();
 $result = $validator->isValid($xml);
 
 if ($result) {
-  echo 'Validación exitosa';
+  echo 'Success!!!';
 } else {
   echo $validator->getError();
 }
