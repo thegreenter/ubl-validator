@@ -55,7 +55,7 @@ class UblPathResolver implements PathResolverInterface
     private function getFullPath($name)
     {
         $filename = 'UBL-'.$name.'-'.$this->version.self::XSD_EXTENSION;
-        $path = $this->baseDirectory.DIRECTORY_SEPARATOR.'maindoc'.DIRECTORY_SEPARATOR.$filename;
+        $path = join(DIRECTORY_SEPARATOR, [$this->baseDirectory, $this->version, 'maindoc', $filename]);
 
         return $path;
     }
