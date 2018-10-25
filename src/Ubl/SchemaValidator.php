@@ -14,18 +14,18 @@ namespace Greenter\Ubl;
 class SchemaValidator implements SchemaValidatorInterface
 {
     /**
-     * @var string
+     * @var XmlError[]
      */
-    private $error;
+    private $errors;
 
     /**
-     * Get last message error or warning.
+     * Get errors list.
      *
-     * @return string
+     * @return XmlError[]
      */
-    public function getMessage()
+    public function getErrors()
     {
-        return $this->error;
+        return $this->errors;
     }
 
     /**
@@ -38,29 +38,33 @@ class SchemaValidator implements SchemaValidatorInterface
     {
         $state = libxml_use_internal_errors(true);
         $result = $document->schemaValidate($xsdPath);
-        $this->error = $this->getErrors();
+        $this->errors = $this->extractErrors();
         libxml_use_internal_errors($state);
 
         return $result;
     }
 
-    private function getErrors()
+    /**
+     * Get errors list.
+     *
+     * @return XmlError[]
+     */
+    public function extractErrors()
     {
-        $message = '';
         $errors = libxml_get_errors();
+        $list = [];
         foreach ($errors as $error) {
-            $message .= $this->getError($error).PHP_EOL;
+            $item = new XmlError();
+            $item->level = $error->level;
+            $item->code = $error->code;
+            $item->column = $error->column;
+            $item->message = $error->message;
+            $item->line = $error->line;
+            $list[] = $item;
         }
 
         libxml_clear_errors();
 
-        return $message;
-    }
-
-    private function getError($error)
-    {
-        $msg = $error->code.': '.trim($error->message).' en la linea '.$error->line;
-
-        return $msg;
+        return $list;
     }
 }
