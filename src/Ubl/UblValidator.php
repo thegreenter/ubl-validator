@@ -70,11 +70,11 @@ class UblValidator implements UblValidatorInterface
     private function getDocument($value)
     {
         if ($value instanceof \DOMDocument) {
-            $doc = $value;
-        } else {
-            $doc = new \DOMDocument();
-            @$doc->loadXML($value);
+            return $value;
         }
+
+        $doc = new \DOMDocument();
+        @$doc->loadXML($value);
 
         return $doc;
     }

@@ -48,6 +48,14 @@ class UblValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($this->validator->getError());
     }
 
+    public function testInvalidXml()
+    {
+        $result = $this->validator->isValid('');
+
+        $this->assertFalse($result);
+        $this->assertNotEmpty($this->validator->getError());
+    }
+
     public function testInvalidSchema()
     {
         $doc = new \DOMDocument();
@@ -56,6 +64,7 @@ class UblValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($result);
         $this->assertNotEmpty($this->validator->getError());
+        echo $this->validator->getError();
     }
 
     public function providerDocs()
