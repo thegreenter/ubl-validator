@@ -21,9 +21,10 @@ interface SchemaValidatorInterface
     public function getMessage();
 
     /**
-     * @param \DOMDocument|string $value Xml content or DomDocument
+     * @param \DOMDocument $document
+     * @param string $xsdPath XSD full path
      *
      * @return bool
      */
-    public function validate($value);
+    public function validate(\DOMDocument $document, $xsdPath);
 }
