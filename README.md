@@ -15,18 +15,13 @@ composer require greenter/ubl-validator
 ```php
 use Greenter\Ubl\UblValidator;
 
-$xmlPath = '20000000001-01-F001-1.xml';
-$xml = file_get_contents($xmlPath);
+$xml = file_get_contents('20000000001-01-F001-1.xml');
 
 $validator = new UblValidator();
 
-$result = $validator->isValid($xml);
-
-if ($result) {
+if ($validator->isValid($xml)) {
   echo 'Success!!!';
 } else {
   echo $validator->getError();
 }
-
-
 ```
