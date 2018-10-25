@@ -9,10 +9,10 @@
 namespace Greenter\Ubl\Resolver;
 
 /**
- * Class DefaultPathResolver
+ * Class UblPathResolver
  * @package Greenter\Ubl\Resolver
  */
-class DefaultPathResolver implements PathResolverInterface
+class UblPathResolver implements PathResolverInterface
 {
     const XSD_EXTENSION = '.xsd';
 
