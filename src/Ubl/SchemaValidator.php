@@ -19,19 +19,6 @@ class SchemaValidator implements SchemaValidatorInterface
     private $error;
 
     /**
-     * @var string
-     */
-    private $version = '2.0';
-
-    /**
-     * @param string $version UBL Version '2.0' or '2.1'
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
      * Get last message error or warning.
      *
      * @return string
@@ -42,28 +29,15 @@ class SchemaValidator implements SchemaValidatorInterface
     }
 
     /**
-     * @param \DOMDocument|string $value Xml content or DomDocument
+     * @param \DOMDocument $document
+     * @param string $xsdPath XSD full path
      *
      * @return bool
      */
-    public function validate($value)
+    public function validate(\DOMDocument $document, $xsdPath)
     {
-        if ($value instanceof \DOMDocument) {
-            $doc = $value;
-        } else {
-            $doc = new \DOMDocument();
-            @$doc->loadXML($value);
-        }
-
-        $filename = $this->getFilename($doc->documentElement->nodeName);
-        if (!file_exists($filename)) {
-            $this->error = 'Schema file not found';
-
-            return false;
-        }
-
         $state = libxml_use_internal_errors(true);
-        $result = $doc->schemaValidate($filename);
+        $result = $document->schemaValidate($xsdPath);
         $this->error = $this->getErrors();
         libxml_use_internal_errors($state);
 
@@ -83,32 +57,10 @@ class SchemaValidator implements SchemaValidatorInterface
         return $message;
     }
 
-    public function getError($error)
+    private function getError($error)
     {
         $msg = $error->code.': '.trim($error->message).' en la linea '.$error->line;
 
         return $msg;
-    }
-
-    private function getFilename($rootName)
-    {
-        $name = $this->getName($rootName);
-
-        $path = __DIR__.'/../xsd/'.$this->version.'/maindoc/'.$name.'.xsd';
-
-        return $path;
-    }
-
-    /**
-     * @param $rootName
-     * @return string
-     */
-    private function getName($rootName)
-    {
-        if ($this->version == '2.0') {
-            return $rootName == 'DespatchAdvice' ? 'UBL-DespatchAdvice-2.0' : 'UBLPE-' . $rootName . '-1.0';
-        }
-
-        return 'UBL-' . $rootName . '-2.1';
     }
 }
