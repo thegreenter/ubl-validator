@@ -29,7 +29,6 @@ class UblValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testDocuments($filename)
     {
-        echo $filename;
         $content = file_get_contents($filename);
         $result = $this->validator->isValid($content);
 

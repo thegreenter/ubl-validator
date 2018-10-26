@@ -36,6 +36,14 @@ class UblPathResolver implements PathResolverInterface
     public $baseDirectory;
 
     /**
+     * UblPathResolver constructor.
+     */
+    public function __construct()
+    {
+        $this->baseDirectory = __DIR__.'/../../xsd';
+    }
+
+    /**
      * Get Path XSD.
      *
      * @param \DOMDocument $document
@@ -62,9 +70,7 @@ class UblPathResolver implements PathResolverInterface
 
     private function loadVersion(\DOMDocument $document)
     {
-        if (!$this->versionResolver) {
-            $this->versionResolver = new UblVersionResolver();
-        }
+        if (!$this->versionResolver) $this->versionResolver = new UblVersionResolver();
 
         $this->version = $this->versionResolver->getVersion($document);
     }
