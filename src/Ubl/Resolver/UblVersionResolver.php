@@ -42,7 +42,7 @@ class UblVersionResolver implements VersionResolverInterface
 
     private function setNs(\DOMDocument $doc)
     {
-        $docName = $doc->documentElement->nodeName;
+        $docName = $doc->documentElement->localName;
 
         $this->rootNs = '/'. self::ROOT_PREFIX . ':' . $docName;
     }
