@@ -14,7 +14,7 @@ namespace Greenter\Ubl\Resolver;
  */
 class UblPathResolver implements PathResolverInterface
 {
-    const XSD_EXTENSION = '.xsd';
+    const FILE_FORMAT = 'UBL-%s-%s.xsd';
 
     /**
      * UBL Version.
@@ -62,7 +62,7 @@ class UblPathResolver implements PathResolverInterface
 
     private function getFullPath($name)
     {
-        $filename = 'UBL-'.$name.'-'.$this->version.self::XSD_EXTENSION;
+        $filename = sprintf(self::FILE_FORMAT, $name, $this->version);
         $path = join(DIRECTORY_SEPARATOR, [$this->baseDirectory, $this->version, 'maindoc', $filename]);
 
         return $path;
