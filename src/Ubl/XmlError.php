@@ -40,6 +40,6 @@ class XmlError
 
     public function __toString()
     {
-        return "Code: {$this->code}, Message: {$this->message}, Line: {$this->line}";
+        return "Code: {$this->code}, Line: {$this->line}, Column: {$this->column}, Message: {$this->message}";
     }
 }
