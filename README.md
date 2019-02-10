@@ -1,4 +1,4 @@
-# UBL Schema Validator
+# OASIS UBL Schema Validator
 
 [![Travis-CI](https://img.shields.io/travis/giansalex/ubl-validator.svg?branch=master&style=flat-square)](https://travis-ci.org/giansalex/ubl-validator)
 [![Coverage Status](https://img.shields.io/coveralls/giansalex/ubl-validator.svg?label=coverage&style=flat-square&branch=master)](https://coveralls.io/github/giansalex/ubl-validator?branch=master)
