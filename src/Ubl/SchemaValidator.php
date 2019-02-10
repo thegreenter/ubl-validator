@@ -14,7 +14,7 @@ namespace Greenter\Ubl;
 class SchemaValidator implements SchemaValidatorInterface
 {
     /**
-     * @var XmlError[]
+     * @var \Generator
      */
     private $errors;
 
@@ -25,7 +25,7 @@ class SchemaValidator implements SchemaValidatorInterface
      */
     public function getErrors()
     {
-        return $this->errors;
+        return $this->errors ? iterator_to_array($this->errors) : [];
     }
 
     /**
@@ -47,24 +47,32 @@ class SchemaValidator implements SchemaValidatorInterface
     /**
      * Get errors list.
      *
-     * @return XmlError[]
+     * @return \Generator
      */
     public function extractErrors()
     {
-        $errors = libxml_get_errors();
-        $list = [];
-        foreach ($errors as $error) {
+        $xmlErrors = libxml_get_errors();
+        $errors = $this->mapToErrors($xmlErrors);
+
+        libxml_clear_errors();
+
+        return $errors;
+    }
+
+    /**
+     * @param \LibXMLError[] $xmlErrors
+     * @return \Generator
+     */
+    private function mapToErrors($xmlErrors)
+    {
+        foreach ($xmlErrors as $error) {
             $item = new XmlError();
             $item->level = $error->level;
             $item->code = $error->code;
             $item->column = $error->column;
             $item->message = $error->message;
             $item->line = $error->line;
-            $list[] = $item;
+            yield $item;
         }
-
-        libxml_clear_errors();
-
-        return $list;
     }
 }

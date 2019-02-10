@@ -32,6 +32,7 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
         $valid = $this->validator->validate($doc, $xsd);
 
         $this->assertTrue($valid);
+        $this->assertEmpty($this->validator->getErrors());
     }
 
     public function testFailValidate()
