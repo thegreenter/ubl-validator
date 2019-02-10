@@ -25,7 +25,7 @@ class SchemaValidator implements SchemaValidatorInterface
      */
     public function getErrors()
     {
-        return $this->errors ? iterator_to_array($this->errors) : [];
+        return iterator_to_array($this->errors);
     }
 
     /**
