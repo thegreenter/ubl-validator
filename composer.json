@@ -1,7 +1,7 @@
 {
     "name": "greenter/ubl-validator",
     "description": "OASIS Universal Business Language Schema Validator UBL v2.0, UBL v2.1",
-    "keywords": ["ubl", "validator", "greenter", "facturacion electronica"],
+    "keywords": ["ubl", "validator", "greenter", "invoice"],
     "license": "MIT",
     "authors": [
         {
