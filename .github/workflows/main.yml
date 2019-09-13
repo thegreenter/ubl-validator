@@ -1,0 +1,39 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-versions }} Tests
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 2
+      matrix:
+        php-versions: ['5.6', '7.1']
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+    - name: Setup PHP
+      uses: shivammathur/setup-php@1.1.1
+      with:
+        php-version: ${{ matrix.php-versions }}
+    - name: PHPUnit Install
+      run: wget -O phpunit https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit
+    - run: composer install
+    - name: Install Coveralls
+      run: composer require php-coveralls/php-coveralls
+    - name: PHPUnit Tests
+      run: ./phpunit
+    - name: Create branch for coveralls
+      run: git checkout -b ${GIT_REMOTE_BRANCH:11}
+      env:
+        GIT_REMOTE_BRANCH: ${{ github.ref }}
+    - name: Report code coverage
+      run: vendor/bin/php-coveralls
+      env:
+        CI_NAME: Github Actions
+        CI_BRANCH: ${GITHUB_REF}
+        CI_PULL_REQUEST: $([ "${GITHUB_EVENT_NAME}" == "pull_request" ] && echo "true" || echo "false")
+        COVERALLS_REPO_TOKEN: ${{ secrets.coverallsToken }}
+      if: matrix.php-versions == '7.1'
