@@ -8,6 +8,8 @@
 
 namespace Greenter\Ubl;
 
+use DOMDocument;
+
 /**
  * Interface UblValidatorInterface
  */
@@ -21,7 +23,7 @@ interface UblValidatorInterface
     public function getError();
 
     /**
-     * @param \DOMDocument|string $value Xml content or DomDocument
+     * @param DOMDocument|string $value Xml content or DomDocument
      *
      * @return bool
      */

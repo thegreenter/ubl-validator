@@ -8,6 +8,8 @@
 
 namespace Greenter\Ubl\Resolver;
 
+use DOMDocument;
+
 /**
  * Interface PathResolverInterface
  */
@@ -16,8 +18,8 @@ interface PathResolverInterface
     /**
      * Get Path XSD.
      *
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @return string|null
      */
-    function getPath(\DOMDocument $document);
+    function getPath(DOMDocument $document);
 }

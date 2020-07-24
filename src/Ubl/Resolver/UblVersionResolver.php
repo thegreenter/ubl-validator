@@ -8,6 +8,9 @@
 
 namespace Greenter\Ubl\Resolver;
 
+use DOMDocument;
+use DOMXPath;
+
 /**
  * Class UblVersionResolver
  */
@@ -24,10 +27,10 @@ class UblVersionResolver implements VersionResolverInterface
     /**
      * UBL Version resolver.
      *
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @return string
      */
-    public function getVersion(\DOMDocument $document)
+    public function getVersion(DOMDocument $document)
     {
         if (empty($document->documentElement)) {
             return '';
@@ -40,22 +43,22 @@ class UblVersionResolver implements VersionResolverInterface
         return $this->getSingleValue($xpath, 'cbc:UBLVersionID');
     }
 
-    private function setNs(\DOMDocument $doc)
+    private function setNs(DOMDocument $doc)
     {
         $docName = $doc->documentElement->localName;
 
         $this->rootNs = '/'. self::ROOT_PREFIX . ':' . $docName;
     }
 
-    private function getXpath(\DOMDocument $doc)
+    private function getXpath(DOMDocument $doc)
     {
-        $xpath = new \DOMXPath($doc);
+        $xpath = new DOMXPath($doc);
         $xpath->registerNamespace(self::ROOT_PREFIX, $doc->documentElement->namespaceURI);
 
         return $xpath;
     }
 
-    private function getSingleValue(\DOMXPath $xpath, $query)
+    private function getSingleValue(DOMXPath $xpath, $query)
     {
         $nodes = $xpath->query($this->rootNs . '/' . $query);
         if ($nodes->length > 0) {

@@ -8,6 +8,8 @@
 
 namespace Greenter\Ubl\Resolver;
 
+use DOMDocument;
+
 /**
  * Interface VersionResolverInterface
  */
@@ -16,8 +18,8 @@ interface VersionResolverInterface
     /**
      * Resolver version from document.
      *
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @return string
      */
-    public function getVersion(\DOMDocument $document);
+    public function getVersion(DOMDocument $document);
 }

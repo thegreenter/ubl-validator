@@ -8,6 +8,7 @@
 
 namespace Greenter\Ubl;
 
+use DOMDocument;
 use Greenter\Ubl\Resolver\UblPathResolver;
 use Greenter\Ubl\Resolver\PathResolverInterface;
 
@@ -40,7 +41,7 @@ class UblValidator implements UblValidatorInterface
     }
 
     /**
-     * @param \DOMDocument|string $value Xml content or DomDocument
+     * @param DOMDocument|string $value Xml content or DomDocument
      *
      * @return bool
      */
@@ -67,11 +68,11 @@ class UblValidator implements UblValidatorInterface
 
     private function getDocument($value)
     {
-        if ($value instanceof \DOMDocument) {
+        if ($value instanceof DOMDocument) {
             return $value;
         }
 
-        $doc = new \DOMDocument();
+        $doc = new DOMDocument();
         @$doc->loadXML($value);
 
         return $doc;

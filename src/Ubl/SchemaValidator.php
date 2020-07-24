@@ -8,13 +8,17 @@
 
 namespace Greenter\Ubl;
 
+use DOMDocument;
+use Generator;
+use LibXMLError;
+
 /**
  * Class SchemaValidator.
  */
 class SchemaValidator implements SchemaValidatorInterface
 {
     /**
-     * @var \Generator
+     * @var Generator
      */
     private $errors;
 
@@ -29,12 +33,12 @@ class SchemaValidator implements SchemaValidatorInterface
     }
 
     /**
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @param string $xsdPath XSD full path
      *
      * @return bool
      */
-    public function validate(\DOMDocument $document, $xsdPath)
+    public function validate(DOMDocument $document, $xsdPath)
     {
         $state = libxml_use_internal_errors(true);
         $result = $document->schemaValidate($xsdPath);
@@ -47,7 +51,7 @@ class SchemaValidator implements SchemaValidatorInterface
     /**
      * Get errors list.
      *
-     * @return \Generator
+     * @return Generator
      */
     public function extractErrors()
     {
@@ -60,8 +64,8 @@ class SchemaValidator implements SchemaValidatorInterface
     }
 
     /**
-     * @param \LibXMLError[] $xmlErrors
-     * @return \Generator
+     * @param LibXMLError[] $xmlErrors
+     * @return Generator
      */
     private function mapToErrors($xmlErrors)
     {

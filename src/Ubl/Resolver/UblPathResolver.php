@@ -8,6 +8,8 @@
 
 namespace Greenter\Ubl\Resolver;
 
+use DOMDocument;
+
 /**
  * Class UblPathResolver
  * @package Greenter\Ubl\Resolver
@@ -46,10 +48,10 @@ class UblPathResolver implements PathResolverInterface
     /**
      * Get Path XSD.
      *
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @return string|null
      */
-    function getPath(\DOMDocument $document)
+    function getPath(DOMDocument $document)
     {
         $name = $document->documentElement->localName;
         if (empty($this->version)) {
@@ -68,7 +70,7 @@ class UblPathResolver implements PathResolverInterface
         return $path;
     }
 
-    private function loadVersion(\DOMDocument $document)
+    private function loadVersion(DOMDocument $document)
     {
         if (!$this->versionResolver) $this->versionResolver = new UblVersionResolver();
 

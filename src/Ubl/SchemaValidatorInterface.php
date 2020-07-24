@@ -8,6 +8,8 @@
 
 namespace Greenter\Ubl;
 
+use DOMDocument;
+
 /**
  * Interface SchemaValidatorInterface
  */
@@ -21,10 +23,10 @@ interface SchemaValidatorInterface
     public function getErrors();
 
     /**
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @param string $xsdPath XSD full path
      *
      * @return bool
      */
-    public function validate(\DOMDocument $document, $xsdPath);
+    public function validate(DOMDocument $document, $xsdPath);
 }
