@@ -11,7 +11,8 @@ Via Composer from [packagist.org](https://packagist.org/packages/greenter/ubl-va
 composer require greenter/ubl-validator
 ```
 
-## Example
+## Examples
+Simple usage.
 ```php
 use Greenter\Ubl\UblValidator;
 
@@ -25,3 +26,41 @@ if ($validator->isValid($xml)) {
   echo $validator->getError();
 }
 ```
+
+Above example follows next steps:
+
+- Resolve `<cbc:UBLVersionID>`
+- Find `XSD` file in [base directory](https://github.com/thegreenter/ubl-validator/tree/master/src/xsd)
+- Run `schemaValidate` and gets result
+
+### Change UBL XSD directory
+
+This package not include all UBL xsd, but you can add others xsd directory and use other UBL version. 
+
+```php
+use Greenter\Ubl\UblValidator;
+use Greenter\Ubl\Resolver\UblPathResolver;
+
+$ubl = new UblValidator();
+$ubl->pathResolver = new UblPathResolver();
+$ubl->pathResolver->baseDirectory = './my-ubl-xsd';
+
+echo $ubl->isValid('<Invoice ...>');
+
+```
+ 
+`/my-ubl-xsd` directory follows this structure:
+
+```
+\my-ubl-xsd
+│
+├─2.1/
+│   ├─ common/
+│   └─ maindoc/
+│
+├─2.2/
+│   ├─ common/
+│   └─ maindoc/
+```
+
+> You can download UBL xsd from [oasis-open](https://docs.oasis-open.org/ubl/)
