@@ -24,12 +24,14 @@ jobs:
       run: composer require php-coveralls/php-coveralls
     - name: Install Infection
       run: wget https://github.com/infection/infection/releases/download/0.17.0/infection.phar && chmod +x infection.phar
+      if: matrix.php-versions == '7.3'
     - name: PHPUnit Tests
       run: vendor/bin/phpunit
     - name: Run Infection
       run: ./infection.phar --min-msi=85 --threads=4
       env:
         INFECTION_BADGE_API_KEY: ${{ secrets.STRYKERAPIKEY }}
+      if: matrix.php-versions == '7.3'
     - name: Create branch for coveralls
       run: git checkout -b ${GIT_REMOTE_BRANCH:11}
       env:
@@ -41,4 +43,4 @@ jobs:
         CI_BRANCH: ${GITHUB_REF}
         CI_PULL_REQUEST: $([ "${GITHUB_EVENT_NAME}" == "pull_request" ] && echo "true" || echo "false")
         COVERALLS_REPO_TOKEN: ${{ secrets.coverallsToken }}
-      if: matrix.php-versions == '7.1'
+      if: matrix.php-versions == '7.3'
