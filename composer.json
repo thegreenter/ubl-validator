@@ -25,5 +25,8 @@
         "psr-4": {
             "Tests\\Greenter\\": "tests/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5"
     }
 }

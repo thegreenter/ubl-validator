@@ -9,7 +9,7 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        php-versions: ['5.6', '7.1']
+        php-versions: ['5.6', '7.3']
     steps:
     - uses: actions/checkout@v1
       with:
@@ -19,22 +19,21 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         extension-csv: dom
-    - name: PHPUnit Install
-      run: wget -O phpunit https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit
     - run: composer install
-    - name: Install Coveralls
-      run: composer require php-coveralls/php-coveralls
     - name: PHPUnit Tests
-      run: ./phpunit
-    - name: Create branch for coveralls
-      run: git checkout -b ${GIT_REMOTE_BRANCH:11}
+      run: vendor/bin/phpunit
+    - name: Run Infection
+      run: |
+        wget https://github.com/infection/infection/releases/download/0.17.0/infection.phar
+        chmod +x infection.phar
+        ./infection.phar --min-msi=85 --threads=4
       env:
-        GIT_REMOTE_BRANCH: ${{ github.ref }}
-    - name: Report code coverage
-      run: vendor/bin/php-coveralls --json_path=build/logs/coveralls-upload.json
-      env:
-        CI_NAME: Github Actions
-        CI_BRANCH: ${GITHUB_REF}
-        CI_PULL_REQUEST: $([ "${GITHUB_EVENT_NAME}" == "pull_request" ] && echo "true" || echo "false")
-        COVERALLS_REPO_TOKEN: ${{ secrets.coverallsToken }}
-      if: matrix.php-versions == '7.1'
+        INFECTION_BADGE_API_KEY: ${{ secrets.STRYKERAPIKEY }}
+      if: matrix.php-versions == '7.3'
+#    - name: Upload coverage results to Coveralls
+#      env:
+#        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLSTOKEN }}
+#      run: |
+#        composer require twinh/php-coveralls
+#        php vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
+#      if: matrix.php-versions == '7.3' && ${{ github.ref }} == 'refs/heads/master'
