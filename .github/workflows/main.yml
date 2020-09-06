@@ -20,20 +20,20 @@ jobs:
         php-version: ${{ matrix.php-versions }}
         extension-csv: dom
     - run: composer install
-    - name: Install Coveralls
-      run: composer require cedx/coveralls
-    - name: Install Infection
-      run: wget https://github.com/infection/infection/releases/download/0.17.0/infection.phar && chmod +x infection.phar
-      if: matrix.php-versions == '7.3'
     - name: PHPUnit Tests
       run: vendor/bin/phpunit
     - name: Run Infection
-      run: ./infection.phar --min-msi=85 --threads=4
+      run: |
+        wget https://github.com/infection/infection/releases/download/0.17.0/infection.phar
+        chmod +x infection.phar
+        ./infection.phar --min-msi=85 --threads=4
       env:
         INFECTION_BADGE_API_KEY: ${{ secrets.STRYKERAPIKEY }}
       if: matrix.php-versions == '7.3'
-    - name: Report code coverage
-      run: php vendor/bin/coveralls build/logs/clover.xml
+    - name: Upload coverage results to Coveralls
       env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.coverallsToken }}
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLSTOKEN }}
+      run: |
+        composer global require twinh/php-coveralls
+        php-coveralls --coverage_clover=build/logs/clover.xml -v
       if: matrix.php-versions == '7.3'
