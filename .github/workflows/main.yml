@@ -21,7 +21,7 @@ jobs:
         extension-csv: dom
     - run: composer install
     - name: Install Coveralls
-      run: composer require php-coveralls/php-coveralls
+      run: composer require cedx/coveralls
     - name: Install Infection
       run: wget https://github.com/infection/infection/releases/download/0.17.0/infection.phar && chmod +x infection.phar
       if: matrix.php-versions == '7.3'
@@ -32,15 +32,8 @@ jobs:
       env:
         INFECTION_BADGE_API_KEY: ${{ secrets.STRYKERAPIKEY }}
       if: matrix.php-versions == '7.3'
-    - name: Create branch for coveralls
-      run: git checkout -b ${GIT_REMOTE_BRANCH:11}
-      env:
-        GIT_REMOTE_BRANCH: ${{ github.ref }}
     - name: Report code coverage
-      run: vendor/bin/php-coveralls --json_path=build/logs/coveralls-upload.json
+      run: php bin/coveralls build/logs/clover.xml
       env:
-        CI_NAME: Github Actions
-        CI_BRANCH: ${GITHUB_REF}
-        CI_PULL_REQUEST: $([ "${GITHUB_EVENT_NAME}" == "pull_request" ] && echo "true" || echo "false")
         COVERALLS_REPO_TOKEN: ${{ secrets.coverallsToken }}
       if: matrix.php-versions == '7.3'
