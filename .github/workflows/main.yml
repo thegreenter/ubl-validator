@@ -22,8 +22,12 @@ jobs:
     - run: composer install
     - name: Install Coveralls
       run: composer require php-coveralls/php-coveralls
+    - name: Install Infection
+      run: wget https://github.com/infection/infection/releases/download/0.17.0/infection.phar && chmod +x infection.phar
     - name: PHPUnit Tests
-      run: ./phpunit
+      run: vendor/bin/phpunit
+    - name: Run Infection
+      run: ./infection.phar --min-msi=85 --threads=4
     - name: Create branch for coveralls
       run: git checkout -b ${GIT_REMOTE_BRANCH:11}
       env:
