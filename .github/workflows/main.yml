@@ -36,4 +36,4 @@ jobs:
       run: |
         composer require twinh/php-coveralls
         php vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
-      if: matrix.php-versions == '7.3'
+      if: matrix.php-versions == '7.3' && ${{ github.ref }} == 'refs/heads/master'
