@@ -28,6 +28,8 @@ jobs:
       run: vendor/bin/phpunit
     - name: Run Infection
       run: ./infection.phar --min-msi=85 --threads=4
+      env:
+        INFECTION_BADGE_API_KEY: ${{ secrets.STRYKERAPIKEY }}
     - name: Create branch for coveralls
       run: git checkout -b ${GIT_REMOTE_BRANCH:11}
       env:
