@@ -19,8 +19,6 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         extension-csv: dom
-    - name: PHPUnit Install
-      run: wget -O phpunit https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit
     - run: composer install
     - name: Install Coveralls
       run: composer require php-coveralls/php-coveralls
