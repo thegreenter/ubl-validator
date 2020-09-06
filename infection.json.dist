@@ -1,0 +1,33 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ],
+        "excludes": [
+           "app" 
+        ]
+    },
+    "timeout": 10,
+    "logs": {
+        "text": "infection.log",
+        "summary": "summary.log",
+        "json": "infection-log.json",
+        "perMutator": "per-mutator.md",
+        "badge": {
+            "branch": "master"
+        }
+    },
+    "mutators": {
+        "@default": true,
+        "@function_signature": false,
+        "TrueValue": {
+            "ignore": [
+                "NameSpace\\*\\Class::method"
+            ]
+        }
+    },
+    "testFramework":"phpunit",
+    "bootstrap":"./vendor/autoload.php",
+    "initialTestsPhpOptions": "",
+    "testFrameworkOptions": "-vvv"
+}
