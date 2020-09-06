@@ -30,10 +30,10 @@ jobs:
       env:
         INFECTION_BADGE_API_KEY: ${{ secrets.STRYKERAPIKEY }}
       if: matrix.php-versions == '7.3'
-    - name: Upload coverage results to Coveralls
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLSTOKEN }}
-      run: |
-        composer require twinh/php-coveralls
-        php vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
-      if: matrix.php-versions == '7.3' && ${{ github.ref }} == 'refs/heads/master'
+#    - name: Upload coverage results to Coveralls
+#      env:
+#        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLSTOKEN }}
+#      run: |
+#        composer require twinh/php-coveralls
+#        php vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
+#      if: matrix.php-versions == '7.3' && ${{ github.ref }} == 'refs/heads/master'
