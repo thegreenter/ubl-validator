@@ -63,7 +63,6 @@ class UblValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($result);
         $this->assertNotEmpty($this->validator->getError());
-        echo $this->validator->getError();
     }
 
     public function providerDocs()
