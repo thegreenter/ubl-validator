@@ -19,7 +19,7 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         extension-csv: dom
-        coverage: xdebug
+        ini-values: xdebug.mode=coverage
     - run: composer install
     - name: PHPUnit Tests
       run: vendor/bin/phpunit
