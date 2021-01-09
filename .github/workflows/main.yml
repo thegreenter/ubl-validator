@@ -23,8 +23,8 @@ jobs:
     - name: PHP version
       run: |
         php -v
-        php -r "echo phpversion();"
-        php -r "echo PHP_VERSION_ID;"
+        php -r "echo 'phpversion(): '.phpversion().PHP_EOL;"
+        php -r "echo 'PHP_VERSION_ID: '.PHP_VERSION_ID.PHP_EOL;"
 
     - name: PHPUnit Tests
       run: vendor/bin/phpunit
