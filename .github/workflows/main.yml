@@ -20,6 +20,12 @@ jobs:
         php-version: ${{ matrix.php-versions }}
         extension-csv: dom
     - run: composer install
+    - name: PHP version
+      run: |
+        php -v
+        php -r "echo phpversion();"
+        php -r "echo PHP_VERSION_ID;"
+
     - name: PHPUnit Tests
       run: vendor/bin/phpunit
     - name: Run Infection
