@@ -29,6 +29,7 @@
 			<xsd:element ref="cbc:ID"/>
 			<xsd:element ref="cbc:IssueDate"/>
             <xsd:element ref="cbc:IssueTime" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="sac:ExceptionalIndicator" minOccurs="0" maxOccurs="1"/>
 			<xsd:element ref="cac:AgentParty"/>
 			<xsd:element ref="cac:ReceiverParty"/>
 			<xsd:element ref="sac:SUNATPerceptionSystemCode"/>
