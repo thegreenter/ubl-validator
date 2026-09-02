@@ -18,7 +18,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
-        extension-csv: dom
+        extensions: dom
         ini-values: xdebug.mode=coverage
     - run: composer install
     - name: PHPUnit Tests
