@@ -79,7 +79,7 @@
 	<xsd:element name="SUNATPerceptionDate" type="SUNATPerceptionDateType" />
 	<xsd:element name="SUNATNetTotalCashed" type="cbc:AmountType" />
 	<xsd:element name="SUNATPerceptionSummaryDocumentReference" type="SUNATPerceptionSummaryDocumentReferenceType"/>
-	<xsd:element name="ExceptionalIndicator" type="ExceptionalIndicatorType" />
+	<xsd:element name="ExceptionalIndicator" type="cbc:IDType" />
 	<!-- Fin Percepciones -->
 	<!-- Retenciones -->
 	<xsd:element name="SUNATRetentionSystemCode" type="cbc:IDType" />
@@ -91,11 +91,6 @@
 	<xsd:element name="SUNATRetentionDate" type="SUNATRetentionDateType" />
 	<xsd:element name="SUNATNetTotalPaid" type="cbc:AmountType" />
 	<!-- Fin Retenciones -->
-	<xsd:simpleType name="ExceptionalIndicatorType">
-		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="2" />
-		</xsd:restriction>
-	</xsd:simpleType>
 	<xsd:complexType name="SUNATEmbededDespatchAdviceType">
 		<xsd:sequence>
 			<xsd:element ref="cac:DeliveryAddress" minOccurs="0"
