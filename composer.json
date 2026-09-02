@@ -28,5 +28,12 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5"
+    },
+    "config": {
+        "policy": {
+            "advisories": {
+                "block": false
+            }
+        }
     }
 }

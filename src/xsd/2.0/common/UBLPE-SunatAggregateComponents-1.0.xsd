@@ -79,6 +79,7 @@
 	<xsd:element name="SUNATPerceptionDate" type="SUNATPerceptionDateType" />
 	<xsd:element name="SUNATNetTotalCashed" type="cbc:AmountType" />
 	<xsd:element name="SUNATPerceptionSummaryDocumentReference" type="SUNATPerceptionSummaryDocumentReferenceType"/>
+	<xsd:element name="ExceptionalIndicator" type="cbc:IDType" />
 	<!-- Fin Percepciones -->
 	<!-- Retenciones -->
 	<xsd:element name="SUNATRetentionSystemCode" type="cbc:IDType" />
